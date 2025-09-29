@@ -1,0 +1,10 @@
+stream {
+    server { # Proxy main
+        listen 5555; # Dummy IP
+        proxy_protocol on;
+        proxy_pass {{ proxy_pass_ip }}:4444; # Dummy IP
+    }
+	# And many more ....
+    # Similar format but different usecases
+}
+

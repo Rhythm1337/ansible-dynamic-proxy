@@ -1,0 +1,80 @@
+---
+- name: Get Public IP from localhost
+  hosts: localhost
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Get public IP address
+      command: curl -s https://api.ipify.org
+      register: pub_ip
+      changed_when: false
+
+    - name: Display current public IP address from localhost
+      debug:
+        msg: "The current public IP from localhost is: {{ pub_ip.stdout }}"
+
+    - name: Set fact for public IP
+      set_fact:
+        public_ip: "{{ pub_ip.stdout }}"
+
+- name: Configure Linode with the public IP from localhost
+  hosts: Proxy
+  gather_facts: true
+  become: true
+  vars:
+    username: "your-user"  # Define your user here :)
+  tasks:
+    - name: Ensuring Required Packages exist
+      apt:
+        name:
+          - nginx
+          - certbot
+          - python3-certbot-nginx
+        state: present
+
+    - name: Display public IP address received from localhost
+      debug:
+        msg: "The public IP received from localhost is: {{ hostvars['localhost'].public_ip }}"
+
+    - name: Copy public IP to public-ip.txt
+      copy:
+        content: "{{ hostvars['localhost'].public_ip }}"
+        dest: "/home/{{ username }}/public-ip.txt"
+
+    - name: Set variable for Nginx configuration
+      set_fact:
+        proxy_pass_ip: "{{ hostvars['localhost'].public_ip }}"
+
+    - block:
+        - name: Create Nginx main configuration (nginx.conf)
+          template:
+            src: nginx-linode-main.conf.j2
+            dest: /etc/nginx/nginx.conf
+
+        - name: Create Nginx plan configuration (plan.conf)
+          template:
+            src: nginx-linode-plan.conf.j2
+            dest: /etc/nginx/sites-available/plan.conf
+
+        - name: Create Nginx web1 configuration (nations.conf)
+          template:
+            src: nginx-linode-web1.conf.j2
+            dest: /etc/nginx/sites-available/nations.conf
+
+        - name: Create Nginx web2 configuration (survival.conf)
+          template:
+            src: nginx-linode-web2.conf.j2
+            dest: /etc/nginx/sites-available/survival.conf
+
+        - name: Create Nginx web3 configuration (creative.conf)
+          template:
+            src: nginx-linode-web3.conf.j2
+            dest: /etc/nginx/sites-available/creative.conf
+          notify: Reload Nginx  # Notify the handler if this block is successful
+
+  handlers:
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
+      become: true
