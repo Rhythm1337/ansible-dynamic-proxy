@@ -5,7 +5,7 @@ A lightweight Ansible playbook that automates the deployment and configuration o
 
 ## Quick Links
 
-- Demo video (Playbook in action): https://www.youtube.com/watch?v=5_Wg7I3wnJA
+- Demo video (Playbook in action): [Youtube Video](https://youtu.be/_LsSLN2q5MM)
 - Handwritten: [View Handwritten Notes PDF](./Handwritten.pdf)
 - License: MIT
 
