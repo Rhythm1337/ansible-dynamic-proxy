@@ -56,20 +56,20 @@
             src: nginx-linode-plan.conf.j2
             dest: /etc/nginx/sites-available/plan.conf
 
-        - name: Create Nginx web1 configuration (nations.conf)
+        - name: Create Nginx web1 configuration (web1.conf)
           template:
             src: nginx-linode-web1.conf.j2
-            dest: /etc/nginx/sites-available/nations.conf
+            dest: /etc/nginx/sites-available/web1.conf
 
-        - name: Create Nginx web2 configuration (survival.conf)
+        - name: Create Nginx web2 configuration (web2.conf)
           template:
             src: nginx-linode-web2.conf.j2
-            dest: /etc/nginx/sites-available/survival.conf
+            dest: /etc/nginx/sites-available/web2.conf
 
-        - name: Create Nginx web3 configuration (creative.conf)
+        - name: Create Nginx web3 configuration (web3.conf)
           template:
             src: nginx-linode-web3.conf.j2
-            dest: /etc/nginx/sites-available/creative.conf
+            dest: /etc/nginx/sites-available/web3.conf
           notify: Reload Nginx  # Notify the handler if this block is successful
 
   handlers:

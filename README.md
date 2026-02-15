@@ -5,7 +5,7 @@ A lightweight Ansible playbook that automates the deployment and configuration o
 
 ## Quick Links
 
-- Demo video (Playbook in action): [Youtube Video](https://youtu.be/_LsSLN2q5MM)
+- Demo video (Playbook in action): [Youtube Video](https://youtu.be/FrCaie-2YKk)
 - Handwritten: [View Handwritten Notes PDF](./Handwritten.pdf)
 - License: MIT
 
@@ -46,7 +46,7 @@ Bash wrapper that logs each run with timestamps. To be executed by cron.
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/ansible-nginx-dynamic-proxy.git
+git clone https://github.com/Rhythm1337/ansible-dynamic-proxy.git
 cd ansible-nginx-dynamic-proxy
 ```
 
